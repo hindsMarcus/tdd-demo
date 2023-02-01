@@ -5,16 +5,17 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.sql.*;
+import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class DBfacadeTest {
+class DBFacadeTest {
+
     Connection con = null;
 
     @BeforeEach
     void setUp() {
         System.out.println("TESTINNNNGGGG");
-
         try {
             con = DBconnector.connection();
             String createTable = "CREATE TABLE IF NOT EXISTS `startcode_test`.`usertable` (\n" +
@@ -34,7 +35,7 @@ class DBfacadeTest {
             ps.setString(2, "Hansen");
             ps.setString(3, "Hemmelig123");
             ps.setString(4, "40404040");
-            ps.setString(5,"Rolighedsvej 3");
+            ps.setString(5, "Rolighedsvej 3");
             ps.executeUpdate();
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
@@ -46,17 +47,34 @@ class DBfacadeTest {
 
     @AfterEach
     void tearDown() {
+    }
 
+
+    @Test
+    public void testAll() throws SQLException {
+        System.out.println("Testing DB connection to see first name of user");
+        DBMapper dbMapper = new DBMapper();
+        ArrayList<String> list = dbMapper.allNames();
+        assertEquals("Hans", list.get(0));
     }
 
     @Test
-    public void testDB() throws SQLException {
-        System.out.println("Testing database connection with first name");
-        String sql = "SELECT fname FROM startcode_test.usertable";
-        try (ResultSet set = con.prepareStatement(sql).executeQuery()) {
-            set.next();
-                String actual = (set.getString("fname"));
-                assertEquals("Hans", actual);
-        }
+    public void testSpecific() throws SQLException {
+        System.out.println("Testing DB connection to see first name of user");
+        DBMapper dbMapper = new DBMapper();
+        ArrayList<String> list = dbMapper.specificUser("Hans");
+        assertEquals("Hans", list.get(0));
+        assertEquals("Hansen", list.get(1));
+        assertEquals("Hemmelig123", list.get(2));
+        assertEquals("40404040", list.get(3));
+        assertEquals("Rolighedsvej 3", list.get(4));
+    }
+
+    @Test
+    public void testEdit() throws SQLException {
+        System.out.println("Testing DB connection to see first name of user");
+        DBMapper dbMapper = new DBMapper();
+        int affected = dbMapper.editUser("Jens", "Hans", "fname");
+        assertEquals(1, affected);
     }
 }
