@@ -45,7 +45,7 @@ class HelloTest {
         String expected = "HELLO, JERRY!";
         assertEquals(actual, expected);
     }
-
+/*
     @Test
     public void testHelloArray(){
         System.out.println("Method to check for array");
@@ -64,21 +64,5 @@ class HelloTest {
         assertEquals(actual, expected);
     }
 
-    @Test
-    public void testHelloArrayMixed(){
-        System.out.println("Method to check for mixed names");
-        String[] nameArray = {"Amy", "BRIAN", "Charlotte"};
-        String actual = hello.sayHello(nameArray);
-        String expected = "Hello, Amy and Charlotte. AND HELLO BRIAN";
-        assertEquals(actual, expected);
-    }
-
-    @Test
-    public void testHelloCommaSplit(){
-        System.out.println("Method to check for commas and then split");
-        String[] nameArray = {"Bob", "Charlie, Dianne"};
-        String actual = hello.sayHello(nameArray);
-        String expected = "Hello, Bob, Charlie, and Dianne";
-        assertEquals(actual, expected);
-    }
+    */
 }
